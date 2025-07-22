@@ -27,7 +27,8 @@
     "update-ui": "node update-ui-styles.js",
     "preview-themes": "node preview-themes.js",
     "apply-theme": "node apply-theme.js",
-    "setup-theme-system": "node update-theme-system.js"
+    "setup-theme-system": "node update-theme-system.js",
+    "test-theme-fix": "node test-theme-fix.js"
   },
   "dependencies": {
     "@mui/material": "^5.14.20",

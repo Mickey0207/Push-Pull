@@ -45,7 +45,12 @@ const colorThemes = {
 // 應用主題到頁面
 export const applyThemeToPage = (themeName) => {
   const theme = colorThemes[themeName];
-  if (!theme) return;
+  if (!theme) {
+    console.error(`主題 ${themeName} 不存在`);
+    return;
+  }
+
+  console.log(`正在應用主題: ${theme.name}`);
 
   // 設置 CSS 變數
   const root = document.documentElement;
@@ -57,10 +62,31 @@ export const applyThemeToPage = (themeName) => {
   root.style.setProperty('--gradient', theme.gradient);
   root.style.setProperty('--bg-gradient', `linear-gradient(135deg, ${theme.background.default} 0%, ${theme.background.paper} 100%)`);
 
+  // 直接更新 body 背景
+  document.body.style.background = `linear-gradient(135deg, ${theme.background.default} 0%, ${theme.background.paper} 100%)`;
+  
+  // 更新 App 容器背景
+  const appElement = document.querySelector('.App');
+  if (appElement) {
+    appElement.style.background = `linear-gradient(135deg, ${theme.background.default} 0%, ${theme.background.paper} 100%)`;
+  }
+
+  // 觸發 Material-UI 主題更新事件
+  window.dispatchEvent(new CustomEvent('themeChanged', { 
+    detail: { themeName, theme } 
+  }));
+
   // 保存到本地存儲
   localStorage.setItem('selectedTheme', themeName);
   
-  console.log(`主題 ${theme.name} 已應用`);
+  console.log(`✅ 主題 ${theme.name} 已成功應用`);
+  
+  // 強制重新渲染某些元素
+  const cards = document.querySelectorAll('.MuiCard-root');
+  cards.forEach(card => {
+    card.style.background = `linear-gradient(135deg, ${theme.background.paper}e6 0%, ${theme.background.paper}cc 100%)`;
+    card.style.border = `1px solid ${theme.primary.main}30`;
+  });
 };
 
 // 從本地存儲載入主題

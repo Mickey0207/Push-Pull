@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
-import darkTheme from '../Global File/theme.js'
+import { createDynamicTheme, applyThemeToPage } from '../user/utils/dynamicThemeProvider'
 import LoginPage from './components/LoginPage'
 import RegisterPage from './components/RegisterPage'
 import MainDashboard from './components/MainDashboard'
@@ -18,8 +18,28 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('selectedTheme') || 'cyberpunk'
+    return createDynamicTheme(savedTheme)
+  })
+
 
   useEffect(() => {
+    // 載入保存的主題
+    const savedTheme = localStorage.getItem('selectedTheme') || 'cyberpunk'
+    applyThemeToPage(savedTheme)
+    
+    // 監聽主題變更事件
+    const handleThemeChange = (event) => {
+      const { theme } = event.detail
+      if (theme) {
+        setCurrentTheme(theme)
+        console.log('App.js: 主題已更新')
+      }
+    }
+    
+    window.addEventListener('themeChanged', handleThemeChange)
+    
     // 檢查本地存儲的token
     const token = localStorage.getItem('authToken')
     if (token) {
@@ -46,6 +66,11 @@ function App() {
     } else {
       setLoading(false)
     }
+    
+    // 清理事件監聽器
+    return () => {
+      window.removeEventListener('themeChanged', handleThemeChange)
+    }
   }, [])
 
   const handleLogin = (token, userData) => {
@@ -62,7 +87,7 @@ function App() {
 
   if (loading) {
     return (
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={currentTheme}>
         <CssBaseline />
         <div className="loading-container">
           <div className="loading-spinner"></div>
@@ -72,7 +97,7 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <Router>
         <div className="App">

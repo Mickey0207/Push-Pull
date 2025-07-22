@@ -81,7 +81,16 @@ const ThemeSettings = ({ open, onClose, currentTheme = 'cyberpunk' }) => {
     setIsApplying(true);
     
     try {
-      // 發送請求到後端應用主題
+      // 直接應用主題到當前頁面
+      const { applyThemeToPage } = await import('../utils/dynamicThemeProvider');
+      const newTheme = applyThemeToPage(selectedTheme);
+      
+      // 觸發全局主題更新事件
+      window.dispatchEvent(new CustomEvent('themeChanged', { 
+        detail: { themeName: selectedTheme, theme: newTheme } 
+      }));
+      
+      // 發送請求到後端保存主題偏好
       const response = await fetch('/api/user/apply-theme', {
         method: 'POST',
         headers: {
@@ -94,15 +103,39 @@ const ThemeSettings = ({ open, onClose, currentTheme = 'cyberpunk' }) => {
       if (response.ok) {
         setShowSuccess(true);
         
-        // 延遲重新載入頁面以應用新主題
+        // 短暫延遲後關閉對話框，不重新載入頁面
         setTimeout(() => {
-          window.location.reload();
+          onClose();
+          setShowSuccess(false);
         }, 1500);
       } else {
-        console.error('主題應用失敗');
+        console.error('主題保存失敗，但主題已應用到當前頁面');
+        // 即使後端失敗，主題仍然已經應用
+        setShowSuccess(true);
+        setTimeout(() => {
+          onClose();
+          setShowSuccess(false);
+        }, 1500);
       }
     } catch (error) {
       console.error('主題應用錯誤:', error);
+      // 嘗試直接應用主題
+      try {
+        const { applyThemeToPage } = await import('../utils/dynamicThemeProvider');
+        const newTheme = applyThemeToPage(selectedTheme);
+        
+        // 觸發全局主題更新事件
+        window.dispatchEvent(new CustomEvent('themeChanged', { 
+          detail: { themeName: selectedTheme, theme: newTheme } 
+        }));
+        setShowSuccess(true);
+        setTimeout(() => {
+          onClose();
+          setShowSuccess(false);
+        }, 1500);
+      } catch (fallbackError) {
+        console.error('主題應用完全失敗:', fallbackError);
+      }
     } finally {
       setIsApplying(false);
     }
