@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1a237e" />
+    <meta name="description" content="整合型六個網頁應用程式系統" />
+    
+    <!-- 源樣黑體字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/ButTaiwan/iansui@latest/iansui.css" rel="stylesheet">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <title>整合型網頁應用程式系統</title>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: 'iansui', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+        }
+        
+        #root {
+            min-height: 100vh;
+        }
+        
+        /* 載入畫面 */
+        .initial-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(26, 35, 126, 0.3);
+            border-top: 4px solid #1a237e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(26, 35, 126, 0.5);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <noscript>您需要啟用 JavaScript 來運行此應用程式。</noscript>
+    <div id="root">
+        <div class="initial-loading">
+            <div>
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 20px; text-align: center;">載入中...</p>
+            </div>
+        </div>
+    </div>
+    <script src="/bundle.js"></script>
+<script defer src="/bundle.js"></script><script defer src="/bundle.js"></script></body>
+</html>

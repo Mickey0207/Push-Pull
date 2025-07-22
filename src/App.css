@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/ButTaiwan/iansui@latest/iansui.css');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'iansui', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  background: var(--bg-gradient, linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%));
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.App {
+  min-height: 100vh;
+  background: var(--bg-gradient, linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%));
+}
+
+/* 載入動畫 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(26, 35, 126, 0.3);
+  border-top: 4px solid #1a237e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px rgba(26, 35, 126, 0.5);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 發光效果 */
+.glow-effect {
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(26, 35, 126, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glow-effect:hover {
+  box-shadow: 0 16px 48px rgba(26, 35, 126, 0.5), 0 0 0 1px rgba(26, 35, 126, 0.3);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* 漸變背景 */
+.gradient-bg {
+  background: linear-gradient(135deg, #1a237e 0%, #7b1fa2 100%);
+}
+
+/* 卡片動畫 */
+.animated-card {
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(26, 35, 126, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.animated-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 24px 80px rgba(26, 35, 126, 0.4), 0 0 0 1px rgba(26, 35, 126, 0.3);
+  border-color: rgba(26, 35, 126, 0.4);
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .App {
+    padding: 0 10px;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* 自定義滾動條 */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 26, 26, 0.8);
+  border-radius: 20px;
+  margin: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #1a237e, #7b1fa2, #e91e63);
+  border-radius: 20px;
+  border: 2px solid rgba(26, 26, 26, 0.8);
+  box-shadow: 0 0 10px rgba(26, 35, 126, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #3f51b5, #9c27b0, #f06292);
+  box-shadow: 0 0 20px rgba(26, 35, 126, 0.5);
+}
+
+/* 動畫關鍵幀 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.6s ease-out;
+}
+
+/* 額外的圓潤樣式類別 */
+.rounded-xl {
+  border-radius: 24px !important;
+}
+
+.rounded-2xl {
+  border-radius: 32px !important;
+}
+
+.rounded-full {
+  border-radius: 50% !important;
+}
+
+/* 玻璃效果 */
+.glass-effect {
+  background: rgba(26, 26, 26, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 浮動效果 */
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* 脈衝效果 */
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(26, 35, 126, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(26, 35, 126, 0.6);
+  }
+}
